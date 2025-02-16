@@ -13,8 +13,8 @@ different ways.
 
 Features include
 - Everything from Chairmarks
-- @belapsed
-- @ballocated
-- @ballocations
-- @btime
-- @btimed
+- `@belapsed`
+- `@ballocated`
+- `@ballocations`
+- `@btime`
+- `@btimed`
