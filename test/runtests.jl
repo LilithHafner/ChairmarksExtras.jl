@@ -4,10 +4,12 @@ using Test
 @testset "ChairmarksExtras.jl" begin
     @test (@belapsed 1+1) isa Float64
     @test 0 < (@belapsed 1+1) < 100
-    @test 0 === @ballocated 1+1
-    @test 0 === @ballocations 1+1
+    @test 0 == @ballocated 1+1
+    @test 0 == @ballocations 1+1
     @test 0 < @ballocated rand(10)
     @test 0 < @ballocations rand(10)
+    @test 0 < @ballocated for _ in 1:rand(50:100) rand(3) end
+    @test 0 < @ballocations for _ in 1:rand(50:100) rand(3) end
 
     p = Pipe()
     redirect_stdout(p) do
