@@ -11,12 +11,13 @@ using Test
     @test 0 < @ballocated for _ in 1:rand(50:100) rand(3) end
     @test 0 < @ballocations for _ in 1:rand(50:100) rand(3) end
 
-    p = Pipe()
-    redirect_stdout(p) do
-        @test 2 == @btime 1+1
+    f = tempname()
+    open(f, "w") do io
+        redirect_stdout(io) do
+            @test 2 == @btime 1+1
+        end
     end
-    close(p.in)
-    s = read(p.out, String)
+    s = read(f, String)
     m = match(r"^  (\d+\.\d\d\d (n|μ|m|))s$", s).captures[1]
     @test s == "  "*m*"s\n"
 
