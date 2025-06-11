@@ -26,10 +26,16 @@ using Test
     @test (@btimed 5 _^2 inv).value ≈ 1/25
     @test_throws MethodError @btimed
 
+    b = @be 1+1
+    @test b.time isa Vector{Float64}
+    @test :time in propertynames(b)
+    @test_throws ErrorException b.squids
+
     @testset "Aqua" begin
         import Aqua
         # persistent_tasks=false because that test is slow and we don't use persistent tasks
-        Aqua.test_all(ChairmarksExtras, deps_compat=false, persistent_tasks=false)
+        Aqua.test_all(ChairmarksExtras, deps_compat=false, persistent_tasks=false, piracies=false)
         Aqua.test_deps_compat(ChairmarksExtras, check_extras=false)
+        Aqua.test_piracies(ChairmarksExtras, treat_as_own=[Chairmarks.Benchmark])
     end
 end
