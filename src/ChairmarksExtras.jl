@@ -139,4 +139,8 @@ macro btime(args...)
     end
 end
 
+Base.getproperty(x::Chairmarks.Benchmark, s::Symbol) =
+    s == :samples ? getfield(x, :samples) : getproperty.(x.samples, s)
+Base.propertynames(x::Chairmarks.Benchmark) = (:samples, fieldnames(Chairmarks.Sample)...)
+
 end

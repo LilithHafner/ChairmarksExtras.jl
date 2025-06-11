@@ -18,3 +18,4 @@ Features include
 - `@ballocations`
 - `@btime`
 - `@btimed`
+- Access benchmark properties with `benchmark.time` as an alias for `getproperty.(benchmark.samples, :time)`
