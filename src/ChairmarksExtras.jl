@@ -91,6 +91,7 @@ julia> @btime rand(4) sort seconds=1
  0.28547170596819316
  0.6337243664545191
  0.9911675357522034
+```
 """
 macro btimed(args...)
     quote
@@ -124,6 +125,7 @@ julia> @btimed @eval begin f(x) = x+5; f(7) end
 
 julia> @btimed rand(4) sort seconds=1
 (value = [0.2657034395624964, 0.2816572316379955, 0.5107416699597612, 0.908363448987202], time = 1.7637310606060608e-8, bytes = 96.0, gctime = 0.0, allocations = 2.0, compile_time = 0.0, recompile_time = 0.0)
+```
 """
 macro btime(args...)
     quote
