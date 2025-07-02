@@ -12,7 +12,7 @@ Benchmark `f` and return the fasted runtime in seconds.
 
 Equivalent to `(@b args...).time`.
 
-See `@be` for more info.
+See also [`@be`](@ref).
 """
 macro belapsed(args...)
     :(@b($(args...)).time)
@@ -25,7 +25,7 @@ integer if the allocation pattern of `f` is nondeterministic.
 
 Similar to `(@b args...).bytes`.
 
-See `@be` for more info.
+See also [`@be`](@ref).
 """
 macro ballocated(args...)
     :(@b($(args...)).bytes)
@@ -38,7 +38,7 @@ integer if the allocation pattern of `f` is nondeterministic.
 
 Similar to `(@b args...).allocs`.
 
-See `@be` for more info.
+See also [`@be`](@ref).
 """
 macro ballocations(args...)
     :(@b($(args...)).allocs)
@@ -72,9 +72,7 @@ end
 Benchmark `f`; print the runtime, amount of allocations, and other relevant performance
 information; and return the result of end of the pipeline
 
-Similar to `Base.@time`
-
-See `@be` for more info on arguments and execution model
+See also [`@be`](@ref), [`Base.@time`](@ref).
 
 # Examples
 ```julia-repl
@@ -114,9 +112,7 @@ end
 Benchmark `f` and return a `NamedTuple` containing both the performance information and the
 result of end of the pipeline.
 
-Similar to `Base.@timed`
-
-See `@be` for more info on arguments and execution model
+See also [`@be`](@ref), [`Base.@timed`](@ref).
 
 # Examples
 ```julia-repl
