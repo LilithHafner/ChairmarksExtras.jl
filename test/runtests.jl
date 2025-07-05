@@ -25,6 +25,10 @@ using Test
     @test (@btimed 5 sqrt _^2 inv).value ≈ 1/5
     @test (@btimed 5 _^2 inv).value ≈ 1/25
     @test_throws MethodError @btimed
+    x = @btimed 1+1 samples=10 evals=17
+    @test x.samples == 10
+    @test x.evals == 17
+    @test x.value == 2
 
     b = @be 1+1
     @test b.time isa Vector{Float64}
