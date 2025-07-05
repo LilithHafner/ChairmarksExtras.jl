@@ -61,8 +61,7 @@ function save_result(expr)
     end
     quote
         $(esc(result)) = Ref{Any}()
-        Chairmarks.summarize($expr), $(esc(result))[]
-
+        $expr, $(esc(result))[]
     end
 end
 
@@ -97,15 +96,18 @@ julia> @btime rand(4) sort seconds=1
 """
 macro btimed(args...)
     quote
-        perf,value = $(save_result(Chairmarks.process_args(args)))
+        full,value = $(save_result(Chairmarks.process_args(args)))
+        summarized = Chairmarks.summarize(full)
         (
             value=value,
-            time=perf.time,
-            bytes=perf.bytes,
-            gctime=perf.gc_fraction*perf.time,
-            allocations=perf.allocs,
-            compile_time=perf.compile_fraction*perf.time,
-            recompile_time=perf.time*perf.compile_fraction*perf.recompile_fraction,
+            time=summarized.time,
+            bytes=summarized.bytes,
+            gctime=summarized.gc_fraction*summarized.time,
+            allocations=summarized.allocs,
+            compile_time=summarized.compile_fraction*summarized.time,
+            recompile_time=summarized.time*summarized.compile_fraction*summarized.recompile_fraction,
+            evals=summarized.evals,
+            samples=length(full.samples),
         )
     end
 end
@@ -135,7 +137,7 @@ macro btime(args...)
     quote
         perf,value = $(save_result(Chairmarks.process_args(args)))
         print("  ")
-        show(stdout, MIME"text/plain"(), perf)
+        show(stdout, MIME"text/plain"(), Chairmarks.summarize(perf))
         println()
         value
     end
