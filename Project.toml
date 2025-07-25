@@ -1,7 +1,7 @@
 name = "ChairmarksExtras"
 uuid = "1f012879-3887-41d0-bd88-38cb7d73fb12"
 authors = ["Lilith Orion Hafner <lilithhafner@gmail.com> and contributors"]
-version = "1.2.0"
+version = "1.2.1"
 
 [deps]
 Chairmarks = "0ca39b1e-fe0b-4e98-acfc-b1656634c4de"
