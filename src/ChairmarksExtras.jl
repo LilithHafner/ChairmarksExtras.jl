@@ -45,8 +45,17 @@ macro ballocations(args...)
 end
 
 function save_result(expr)
+    if expr.head == :escape && length(expr.args) == 1
+        return Expr(:escape, save_result(expr.args[1]))
+    end
+    if expr.head == :let && length(expr.args) == 2
+        return Expr(:let, expr.args[1], save_result(expr.args[2]))
+    end
+    if expr.head == :block && length(expr.args) == 1
+        return Expr(:block, save_result(expr.args[1]))
+    end
     result = gensym("result")
-    args = expr.args[1].args
+    args = expr.args
     length(args) == 2 && return expr
     length(args) == 3 && insert!(args, 3, nothing)
     while length(args) < 5; push!(args, nothing) end
@@ -60,8 +69,8 @@ function save_result(expr)
         args[i] = :($x -> $result[] = $(args[i])($x))
     end
     quote
-        $(esc(result)) = Ref{Any}()
-        $expr, $(esc(result))[]
+        $result = Ref{Any}()
+        $expr, $result[]
     end
 end
 
