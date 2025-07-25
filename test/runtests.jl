@@ -35,6 +35,12 @@ using Test
     @test :time in propertynames(b)
     @test_throws ErrorException b.squids
 
+    # Interpolation
+    x = 3
+    @test redirect_stdout(devnull) do
+        (@btime 1 + $x seconds=0)
+    end == 4
+
     @testset "Aqua" begin
         import Aqua
         # persistent_tasks=false because that test is slow and we don't use persistent tasks
